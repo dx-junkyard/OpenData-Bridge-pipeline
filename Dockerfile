@@ -1,9 +1,8 @@
 # Pythonのベースイメージを指定
 FROM python:3.9-slim
 
-RUN mkdir /output
+RUN mkdir /work
 RUN mkdir /app
-RUN mkdir /app/dl_dir
 
 # 作業ディレクトリを設定
 WORKDIR /app
@@ -24,15 +23,7 @@ RUN wget "${PIPELINE_DL_DEF}" -O pipeline_download.json
 RUN pip install --no-cache-dir -r dl_requirements.txt
 RUN python pipeline_manager.py pipeline_download.json
 
-RUN ls -la /app/dl_dir
+WORKDIR /work
 
-WORKDIR /app/dl_dir
+CMD cp -r /app/pipeline /work/ && touch /work/pipeline/__init__.py && pip install --no-cache-dir -r /work/pipeline/requirements.txt && python /work/pipeline/pipeline_framework.py /work/pipeline/pipeline.yaml
 
-# 必要なPythonパッケージをインストール
-RUN pip install --no-cache-dir -r requirements.txt
-
-# pipelineを実行
-RUN python pipeline_framework.py
-
-# コンテナ実行時に結果を取得する
-CMD cp -r /app/dl_dir /output
