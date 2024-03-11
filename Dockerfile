@@ -25,5 +25,5 @@ RUN python pipeline_manager.py pipeline_download.json
 
 WORKDIR /work
 
-CMD cp -r /app/pipeline /work/ && touch /work/pipeline/__init__.py && pip install --no-cache-dir -r /work/pipeline/requirements.txt && python /work/pipeline/pipeline_framework.py /work/pipeline/pipeline.yaml
+CMD if [ ! -d "/work/pipeline" ]; then cp -r /app/pipeline /work/; fi && touch /work/pipeline/__init__.py && pip install --no-cache-dir -r /work/pipeline/requirements.txt && python /work/pipeline/pipeline_framework.py /work/pipeline/pipeline.yaml
 
