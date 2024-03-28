@@ -1,7 +1,7 @@
 import requests
 import os
 import json
-from download_step import DownloadStep
+from download_manager_step import DownloadStep
 
 config = "pipeline_download.json"
 step_type = "pipeline"
