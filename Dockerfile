@@ -23,7 +23,6 @@ ARG PIPELINE_DL_DEF
 
 RUN wget "${PIPELINE_DL_DEF}" -O pipeline_download.json
 
-RUN pip install --upgrade setuptools
 RUN pip install --no-cache-dir -r dl_requirements.txt
 RUN python pipeline_manager.py pipeline_download.json
 
