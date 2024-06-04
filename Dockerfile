@@ -4,6 +4,7 @@ FROM python:3.9-slim
 RUN mkdir /work
 RUN mkdir /app
 RUN mkdir /app/pipeline
+RUN mkdir /app/pipeline/lib
 
 # 作業ディレクトリを設定
 WORKDIR /app
