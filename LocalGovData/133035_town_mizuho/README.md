@@ -13,7 +13,7 @@ export TARGET_IMAGE="001_BasicImage"
 
 ### 1-3. 環境構築
 ```
-curl -o ${TARGET_IMAGE}.tgz  https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/Docker/${TARGET_IMAGE}.tgz && tar xvzf ${TARGET_IMAGE}.tgz && cd ${TARGET_IMAGE} && docker compose build
+curl -o ${TARGET_IMAGE}.tgz  https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/Docker/${TARGET_IMAGE}.tgz && tar xvzf ${TARGET_IMAGE}.tgz && cd ${TARGET_IMAGE} && docker compose build && docker compose up
 ```
 
 ### 1-4. pipelineの実行
