@@ -17,7 +17,6 @@ RUN apt-get update && \
 
 
 COPY ./app/* /app/
-COPY ./app/pipeline/* /app/pipeline/
 
 
 # リポジトリをクローン
