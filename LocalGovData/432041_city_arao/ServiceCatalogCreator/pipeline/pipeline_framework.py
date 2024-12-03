@@ -4,30 +4,16 @@ import yaml
 
 
 # ステップクラスのインポート
-from download_step import DownloadStep
-from data_extraction_step import DataExtractionStep
-from attribution_processing_step import AttributionProcStep
 from web_scraper_step import WebScraperStep
 from html2htaglayer_step import Html2HtagLayerStep
 from ollama_step import OllamaStep
 from embedding_step import EmbeddingStep
-from service_catalog_creator_step import ServiceCatalogCreatorStep
-from experimental_step_a import ExperimentalStepA
-from experimental_step_b import ExperimentalStepB
-from experimental_step_c import ExperimentalStepC
 
 # ステップをファクトリーに登録
-StepFactory.register_step('download_step', DownloadStep)
-StepFactory.register_step('data_extraction_step', DataExtractionStep)
-StepFactory.register_step('attribution_step', AttributionProcStep)
 StepFactory.register_step('web_scraper_step', WebScraperStep)
 StepFactory.register_step('html2htaglayer_step', Html2HtagLayerStep)
 StepFactory.register_step('ollama_step', OllamaStep)
 StepFactory.register_step('embedding_step', EmbeddingStep)
-StepFactory.register_step('service_catalog_creator_step', ServiceCatalogCreatorStep)
-StepFactory.register_step('experimental_step_a', ExperimentalStepA)
-StepFactory.register_step('experimental_step_b', ExperimentalStepB)
-StepFactory.register_step('experimental_step_c', ExperimentalStepC)
 
 def execute_pipeline(pipeline_config_path):
     with open(pipeline_config_path, 'r') as file:

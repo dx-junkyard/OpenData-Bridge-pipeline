@@ -45,6 +45,18 @@
             "filename": "html2htaglayer_step.py"
         },
         {
+            "title": "llm step",
+            "comment": "llmを使った概要の作成",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/LocalGovData/432041_city_arao/ServiceCatalogCreator/pipeline/ollama_step.py",
+            "filename": "ollama_step.py"
+        },
+        {
+            "title": "embedding step",
+            "comment": "サービスカタログのベクトル化",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/LocalGovData/432041_city_arao/ServiceCatalogCreator/pipeline/embedding_step.py",
+            "filename": "embedding_step.py"
+        },
+        {
             "title": "pipeline定義ファイル",
             "comment": "処理を定義する",
             "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/LocalGovData/432041_city_arao/ServiceCatalogCreator/pipeline/pipeline.yaml",
