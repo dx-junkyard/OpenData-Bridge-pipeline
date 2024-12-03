@@ -20,7 +20,6 @@ RUN curl https://ollama.ai/install.sh | sh
 
 
 COPY ./app/* /app/
-COPY ./app/pipeline/* /app/pipeline/
 
 
 # リポジトリをクローン
