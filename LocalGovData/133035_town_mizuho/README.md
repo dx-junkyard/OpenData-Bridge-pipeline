@@ -1,20 +1,28 @@
-# 瑞穂町のデータ
+# 瑞穂町の行政サービスカタログ作成
 
 ## 1. 行政サービスのカタログを作成
-### ダウンロード定義の指定
+### 1-1. ダウンロード定義の指定
 ```
-export PIPELINE_DL_DEF="https://raw.githubusercontent.com/dx-junkyard/OpenData-Library/main/LocalGovData/133035_town_mizuho/ServiceCatalogCreator/pipeline_download.json"
-```
-
-### 環境構築＆初回実行
-```
-git clone https://github.com/dx-junkyard/OpenData-Bridge-pipeline.git && cd OpenData-Bridge-pipeline && docker compose build && docker compose up
+export PIPELINE_DL_DEF="https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/LocalGovData/133035_town_mizuho/ServiceCatalogCreator/pipeline_download.json"
 ```
 
-### 試行錯誤
-- データ整形のためのコードと設定ファイル一式は./pipelineの下に配置されます。必要に応じて編集してください
-  - 各ステップを実行するためには./pipeline/pipeline.yaml のskip_flg : no と設定する必要があります。（慣れないうちは１ステップだけ実行する設定がオススメです）
-- 以下のコマンドでコンテナを起動し、処理を再度実行します。
+### 1-2. 使用するDockerfileの指定
+```
+export TARGET_IMAGE="001_BasicImage"
+```
+
+### 1-3. 環境構築
+```
+curl -o ${TARGET_IMAGE}.tgz  https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/Docker/${TARGET_IMAGE}.tgz && tar xvzf ${TARGET_IMAGE}.tgz && cd ${TARGET_IMAGE} && docker compose build
+```
+
+### 1-4. pipelineの実行
+- 各ステップの実行on/off
+  - 各ステップを実行するためには./pipeline/pipeline.yaml のskip_flg : no に変更、実行しないステップはyesを指定
+  - 慣れないうちは１ステップだけ実行し、成功したら次の１ステップを実行していくことを推奨
+- pipelineの修正
+  - データ整形のためのコードと設定ファイル一式は./pipeline以下にあるため、必要に応じて編集
+- 以下のコマンドでdockerコンテナを起動し、pipelineを実行
 ```
 docker compose up
 ```
@@ -65,5 +73,5 @@ steps:
 ### 注意点
 - 上記の手順どおり実行市た場合、指定サイト内のファイル収集が完了するまで止まりません。Macであれば control + c 等で適当なところで中断させてください。
 - 処理結果は100ダウンロード単位でprogress.jsonに途中経過が記録され、"docker compose up"で中断したところから再開します。
-- ある程度ファイルが溜まった段階で、[./pipeline/pipeline.yamlのskip_flg](https://github.com/dx-junkyard/OpenData-Library/blob/ura/LocalGovData/432041_city_arao/ServiceCatalogCreator/pipeline/pipeline.yaml#L9)の値をyesもしくは項目削除することで、スクレイピングをスキップし、ダウンロード済のファイルをもとにカタログ作成に移行することができます。
+- ある程度ファイルが溜まった段階で、[./pipeline/pipeline.yamlのskip_flg](https://github.com/dx-junkyard/OpenData-Bridge-pipeline/blob/ura/LocalGovData/133035_town_mizuho/ServiceCatalogCreator/pipeline/pipeline.yaml#L9)の値をyesもしくは項目削除することで、スクレイピングをスキップし、ダウンロード済のファイルをもとにカタログ作成に移行することができます。
 

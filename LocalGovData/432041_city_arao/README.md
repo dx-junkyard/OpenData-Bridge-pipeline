@@ -9,11 +9,11 @@ export PIPELINE_DL_DEF="https://raw.githubusercontent.com/dx-junkyard/OpenData-B
 ### 1-2. 概要解析LLMの実行形式の指定
 #### アプリ版のOllamaを使用（※　基本はこちらを選択：[ここ](https://ollama.com/)から入手し、インストール）
 ```
-export TARGET_IMAGE="002_LocalLLMImage"
+export TARGET_IMAGE="001_BasicImage"
 ```
 #### dockerコンテナのOllamaを使用（※ MacやGPU性能が低い場合は非推奨：アプリのOllamaの60倍近く時間がかかります）
 ```
-export TARGET_IMAGE="001_BasicImage"
+export TARGET_IMAGE="002_LocalLLMImage"
 ```
 
 ### 1-3. 環境構築
