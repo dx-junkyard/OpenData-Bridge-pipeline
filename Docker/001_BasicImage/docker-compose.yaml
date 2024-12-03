@@ -8,6 +8,7 @@ services:
     volumes:
       - .:/work  # 出力ディレクトリをマウント
     command: sh -c "
+        if [ ! -d "/work/pipeline" ]; then cp -r /app/pipeline /work/; fi &&
         pip install --no-cache-dir -r /work/pipeline/requirements.txt &&
         python /work/pipeline/pipeline_framework.py /work/pipeline/pipeline.yaml
       "

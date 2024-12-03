@@ -11,6 +11,7 @@ services:
         ollama serve &
         sleep 10 &&
         ollama pull qwen2.5-coder:7b-instruct &&
+        if [ ! -d "/work/pipeline" ]; then cp -r /app/pipeline /work/; fi &&
         pip install --no-cache-dir -r /work/pipeline/requirements.txt &&
         python /work/pipeline/pipeline_framework.py /work/pipeline/pipeline.yaml
       "
