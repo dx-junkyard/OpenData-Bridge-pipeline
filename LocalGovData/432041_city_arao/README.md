@@ -1,20 +1,33 @@
 # 荒尾市のデータ
 
 ## 1. 行政サービスのカタログを作成
-### ダウンロード定義の指定
+### 1-1. ダウンロード定義の指定
 ```
 export PIPELINE_DL_DEF="https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/LocalGovData/432041_city_arao/ServiceCatalogCreator/pipeline_download.json"
 ```
 
-### 環境構築＆初回実行
+### 1-2. 概要解析LLMの実行形式の指定
+#### アプリ版のOllamaを使用（※　基本はこちらを選択：[ここ](https://ollama.com/)から入手し、インストール）
 ```
-TARGET_IMAGE="001_BasicImage" && curl -o ${TARGET_IMAGE}.tgz  https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/Docker/${TARGET_IMAGE}.tgz && tar xvzf ${TARGET_IMAGE}.tgz && cd ${TARGET_IMAGE} && docker compose build && docker compose up
+export TARGET_IMAGE="002_LocalLLMImage"
+```
+#### dockerコンテナのOllamaを使用（※ MacやGPU性能が低い場合は非推奨：アプリのOllamaの60倍近く時間がかかります）
+```
+export TARGET_IMAGE="001_BasicImage"
 ```
 
-### 試行錯誤
-- データ整形のためのコードと設定ファイル一式は./pipelineの下に配置されます。必要に応じて編集してください
-  - 各ステップを実行するためには./pipeline/pipeline.yaml のskip_flg : no と設定する必要があります。（慣れないうちは１ステップだけ実行する設定がオススメです
-- 以下のコマンドでコンテナを起動し、処理を再度実行します。
+### 1-3. 環境構築
+```
+curl -o ${TARGET_IMAGE}.tgz  https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/Docker/${TARGET_IMAGE}.tgz && tar xvzf ${TARGET_IMAGE}.tgz && cd ${TARGET_IMAGE} && docker compose build
+```
+
+### 1-4. pipelineの実行
+- 各ステップの実行on/off
+  - 各ステップを実行するためには./pipeline/pipeline.yaml のskip_flg : no に変更、実行しないステップはyesを指定
+  - 慣れないうちは１ステップだけ実行し、成功したら次の１ステップを実行していくことを推奨
+- pipelineの修正
+  - データ整形のためのコードと設定ファイル一式は./pipeline以下にあるため、必要に応じて編集
+- 以下のコマンドでdockerコンテナを起動し、pipelineを実行
 ```
 docker compose up
 ```
@@ -52,7 +65,6 @@ steps:
 | `skip_flg`        | ステップをスキップするかどうかを示すフラグ。`yes`に設定するとステップがスキップされます。              | (All) |
 | `input_json_path` | 入力データが必要なステップの入力JSONファイルのパス。                                         | (All) |
 | `output_json_path`| ステップ結果を保存する出力JSONファイルのパス。                                               | (All) |
-| `n_clusters`      | クラスタリングアルゴリズムで使用するクラスターの数。                                            | experimental_step_a |
 
 
 #### パラメータ設定での注意点
