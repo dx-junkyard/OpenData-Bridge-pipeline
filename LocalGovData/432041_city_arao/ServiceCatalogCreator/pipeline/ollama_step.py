@@ -14,12 +14,33 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 class OllamaStep:
     def __init__(self, step_config):
-        self.progress_file_path = step_config['progress_file']
-        self.input_json_path = step_config['input_json_file']
-        self.output_json_path = step_config['output_json_file']
         self.progress_data = None
         self.url_to_filepath = None
-        self.ollama_client = OllamaClient()
+        # URLに対応するHTML（スクレイピングで取得したもの）
+        self.progress_file_path = step_config['progress_file']
+        # 入力：「概要」再作成対象のサービスカタログjson
+        self.input_json_path = step_config['input_json_file']
+        # 出力：「概要」再作成したサービスカタログの出力先
+        self.output_json_path = step_config['output_json_file']
+
+        # LLMの設定
+        self.llm_url = step_config['llm_url']
+        self.llm_api_key = step_config['llm_api_key']
+        self.llm_model = step_config['llm_model']
+        llm_prompt_file = step_config['llm_prompt_file']
+        llm_prompt = self.load_llm_prompt(llm_prompt_file)
+        self.ollama_client = OllamaClient(self.llm_url, self.llm_api_key, self.llm_model, llm_prompt)
+
+    def load_llm_prompt(self, llm_prompt_file):
+        try:
+            with open(llm_prompt_file, 'r', encoding='utf-8') as file:
+                llm_prompt = file.read()
+                return llm_prompt
+        except FileNotFoundError:
+            print(f"指定されたファイル '{self.llm_prompt_file}' が見つかりません。")
+        except Exception as e:
+            print(f"エラーが発生しました: {e}")
+        return ""
 
     def load_progress(self):
         """Load the progress JSON file once."""
@@ -81,44 +102,27 @@ class OllamaStep:
 
 
 class OllamaClient:
-    def __init__(self):
+    def __init__(self, llm_url, llm_api_key, llm_model, llm_prompt):
+        self.llm_url = llm_url
+        self.llm_api_key = llm_api_key
+        self.llm_model = llm_model
+        self.llm_prompt = llm_prompt
+        #logging.info(f"LLM prompt : {llm_prompt}")
         # OpenAIクライアントのセットアップ
         self.client = OpenAI(
-#            base_url='http://localhost:11434/v1/',
-            base_url='http://host.docker.internal:11434/v1/',
-            api_key='ollama',
+            base_url=self.llm_url,
+            api_key=self.llm_api_key,
         )
 
     def create_summary(self, content):
-        prompt_new = f"""
-        以下の内容を日本語で利用者向けのにサービスの説明を要約してほしい。
-
-        {content}
-        """
-        prompt = f"""
-        以下の内容から、施設やサービスに関する概要を3つの短い文で要約してください：
-
-        {content}
-
-        出力形式：
-        1. [1つ目の要約文]
-        2. [2つ目の要約文]
-        3. [3つ目の要約文]
-        注意事項：
-    1. 提供されたテキスト内にある情報のみを使用し、外部情報は使用しないでください。
-    2. 各項目の情報は、必ず提供されたテキスト内に存在することを確認してから出力してください。
-    3. 抽出した情報は可能な限り簡潔にし、余分な説明は避けてください。
-    4. 出力前に正確な内容か、仮説と反証して、確認しろ
-        """
-
         try:
+            prompt = f"{self.llm_prompt}\n{content}"
             chat_completion = self.client.chat.completions.create(
-                model='qwen2.5-coder:7b-instruct',
-#                model='llama3',
+                model=self.llm_model,
                 messages=[
                     {
                         'role': 'user',
-                        'content': prompt_new,
+                        'content': prompt,
                     }
                 ]
             )
