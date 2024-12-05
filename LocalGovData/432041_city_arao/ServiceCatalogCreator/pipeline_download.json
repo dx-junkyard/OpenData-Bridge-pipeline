@@ -53,7 +53,7 @@
         {
             "title": "llm prompt",
             "comment": "llmのプロンプトテンプレート",
-            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/LocalGovData/432041_city_arao/ServiceCatalogCreator/llm_prompt.txt",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/LocalGovData/432041_city_arao/ServiceCatalogCreator/pipeline/llm_prompt.txt",
             "filename": "../llm_prompt.txt"
         },
         {
