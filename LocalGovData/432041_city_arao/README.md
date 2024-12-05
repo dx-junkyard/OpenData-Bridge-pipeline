@@ -20,6 +20,11 @@ export TARGET_IMAGE="002_LocalLLMImage"
 ```
 curl -o ${TARGET_IMAGE}.tgz  https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/Docker/${TARGET_IMAGE}.tgz && tar xvzf ${TARGET_IMAGE}.tgz && cd ${TARGET_IMAGE} && docker compose build && docker compose up
 ```
+アプリのollamaを使う場合は必要に応じてollamaにモデルを追加
+```
+ollama pull schroneko/llama-3.1-swallow-8b-instruct-v0.1:latest
+ollama pull lucas2024/llama-3-elyza-jp-8b:q5_k_m
+```
 
 ### 1-4. pipelineの実行
 - 各ステップの実行on/off
