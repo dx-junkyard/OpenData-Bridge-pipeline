@@ -51,6 +51,12 @@
             "filename": "ollama_step.py"
         },
         {
+            "title": "llm prompt",
+            "comment": "llmのプロンプトテンプレート",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/LocalGovData/432041_city_arao/ServiceCatalogCreator/pipeline/llm_prompt.txt",
+            "filename": "../llm_prompt.txt"
+        },
+        {
             "title": "embedding step",
             "comment": "サービスカタログのベクトル化",
             "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/LocalGovData/432041_city_arao/ServiceCatalogCreator/pipeline/embedding_step.py",
