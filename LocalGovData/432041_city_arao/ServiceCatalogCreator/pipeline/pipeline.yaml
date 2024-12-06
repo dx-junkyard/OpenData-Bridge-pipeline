@@ -22,7 +22,7 @@ steps:
     llm_url: http://host.docker.internal:11434/v1/
     llm_model: lucas2024/llama-3-elyza-jp-8b:q5_k_m
     llm_api_key: ollama
-    llm_prompt_file: ./llm_prompt.txt
+    llm_prompt_file: ./pipeline/llm_prompt.txt
     skip_flg: yes
   - name: LLM(swallow) app Summary
     type: ollama_step
@@ -32,11 +32,15 @@ steps:
     llm_url: http://host.docker.internal:11434/v1/
     llm_model: schroneko/llama-3.1-swallow-8b-instruct-v0.1:latest
     llm_api_key: ollama
-    llm_prompt_file: ./llm_prompt.txt
+    llm_prompt_file: ./pipeline/llm_prompt.txt
     skip_flg: yes
-  - name: Embedding step
+  - name: Embedding step(elyza)
     type: embedding_step
-    service_catalog_json: ./output_json/service_catalog_llm.json
-    embeddings_file: ./output_json/service_catalog_embedding.json
-    llm_prompt_file: ./llm_prompt.txt
+    service_catalog_json: ./output_json/service_catalog_llm_elyza.json
+    embeddings_file: ./output_json/service_catalog_embedding_elyza.json
+    skip_flg: yes
+  - name: Embedding step(swallow)
+    type: embedding_step
+    service_catalog_json: ./output_json/service_catalog_llm_swallow.json
+    embeddings_file: ./output_json/service_catalog_embedding_swallow.json
     skip_flg: yes
