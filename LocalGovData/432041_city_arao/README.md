@@ -1,7 +1,11 @@
 # 荒尾市のデータ
 
 ## 1. 行政サービスのカタログを作成
-### 1-1. ダウンロード定義の指定
+### 1-1. ダウンロード定義の指定(new)
+```
+export PIPELINE_DL_DEF="https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/LocalGovData/432041_city_arao/ServiceCatalogCreator_v2/pipeline_download.json"
+```
+### 1-1. ダウンロード定義の指定(old version)
 ```
 export PIPELINE_DL_DEF="https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/LocalGovData/432041_city_arao/ServiceCatalogCreator/pipeline_download.json"
 ```
@@ -24,6 +28,7 @@ curl -o ${TARGET_IMAGE}.tgz  https://raw.githubusercontent.com/dx-junkyard/OpenD
 ```
 ollama pull schroneko/llama-3.1-swallow-8b-instruct-v0.1:latest
 ollama pull lucas2024/llama-3-elyza-jp-8b:q5_k_m
+ollama pull llama3.3:latest
 ```
 
 ### 1-4. pipelineの実行
