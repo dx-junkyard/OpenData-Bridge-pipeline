@@ -1,0 +1,38 @@
+steps:
+  - name: WebScraper
+    type: web_scraper_step
+    start_url: https://www.city.kokubunji.tokyo.jp/
+    user_agent: (set your user agent)
+    output_dir: ./output
+    progress_file: ./progress.json
+    save_every: 100
+    skip_flg: yes
+  - name: WebDataToJson(OpenAI API)
+    type: html2htaglayer_step
+    progress_file: ./progress.json
+    output_json_dir: ./output_json
+    columns_yaml: ./pipeline/columns.yaml
+    include_keywords: "相談,窓口,補助,支給,提出,利用,対象,料金,対象,登録,予約,申請,申込み,申し込み,施設,設備"
+    llm_url: http://host.docker.internal:11434/v1/
+    llm_model: gpt-4o
+    llm_api_key: ollama
+    llm_prompt_file: ./pipeline/llm_service_json_prompt.txt
+    save_every: 10
+    skip_flg: yes
+  - name: WebDataToJson(LocalLLM ollama)
+    type: html2htaglayer_step
+    progress_file: ./progress.json
+    output_json_dir: ./output_json
+    columns_yaml: ./pipeline/columns.yaml
+    include_keywords: "相談,窓口,補助,支給,提出,利用,対象,料金,対象,登録,予約,申請,申込み,申し込み,施設,設備"
+    llm_url: http://host.docker.internal:11434/v1/
+    llm_model: llama3.3:latest
+    llm_api_key: ollama
+    llm_prompt_file: ./pipeline/llm_service_json_prompt.txt
+    save_every: 10
+    skip_flg: yes
+  - name: Embedding step
+    type: embedding_step
+    service_catalog_json: ./output_json/service_catalog.json
+    embeddings_file: ./output_json/service_catalog_embedding_llm3.3.json
+    skip_flg: yes
