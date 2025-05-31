@@ -1,13 +1,9 @@
 # 荒尾市のデータ
 
 ## 1. 行政サービスのカタログを作成
-### 1-1. ダウンロード定義の指定(new)
+### 1-1. ダウンロード定義の指定
 ```
-export PIPELINE_DL_DEF="https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/LocalGovData/432041_city_arao/ServiceCatalogCreator_v2/pipeline_download.json"
-```
-### 1-1. ダウンロード定義の指定(old version)
-```
-export PIPELINE_DL_DEF="https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/LocalGovData/432041_city_arao/ServiceCatalogCreator/pipeline_download.json"
+export PIPELINE_DL_DEF="https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/LocalGovData/13214_city_kokubunji/ServiceCatalogCreator/pipeline_download.json"
 ```
 
 ### 1-2. 概要解析LLMの実行形式の指定
@@ -88,5 +84,5 @@ steps:
 ### 注意点
 - 上記の手順どおり実行市た場合、指定サイト内のファイル収集が完了するまで止まりません。Macであれば control + c 等で適当なところで中断させてください。
 - 処理結果は100ダウンロード単位でprogress.jsonに途中経過が記録され、"docker compose up"で中断したところから再開します。
-- ある程度ファイルが溜まった段階で、[./pipeline/pipeline.yamlのskip_flg](https://github.com/dx-junkyard/OpenData-Bridge-pipeline/blob/ura/LocalGovData/432041_city_arao/ServiceCatalogCreator/pipeline/pipeline.yaml#L9)の値をyesもしくは項目削除することで、スクレイピングをスキップし、ダウンロード済のファイルをもとにカタログ作成に移行することができます。
+- ある程度ファイルが溜まった段階で、[./pipeline/pipeline.yamlのskip_flg](https://github.com/dx-junkyard/OpenData-Bridge-pipeline/blob/ura/LocalGovData/13214_city_kokubunji/ServiceCatalogCreator/pipeline/pipeline.yaml#L9)の値をyesもしくは項目削除することで、スクレイピングをスキップし、ダウンロード済のファイルをもとにカタログ作成に移行することができます。
 

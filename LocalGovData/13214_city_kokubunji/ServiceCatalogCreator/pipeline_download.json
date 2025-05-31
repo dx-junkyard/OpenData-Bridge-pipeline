@@ -1,0 +1,54 @@
+{
+    "title": "行政サービスのカタログ生成pipelineに使用するファイルのダウンロード定義",
+    "description": "自治体のホームページをスクレイピングし、取得した全ページのカタログ化を行うpipelineに使用するファイル取得定義",
+    "files": [
+        {
+            "title": "pipeline本体",
+            "comment": "pipeline",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/LocalGovData/13214_city_kokubunji/ServiceCatalogCreator/pipeline/pipeline_framework.py",
+            "filename": "pipeline_framework.py"
+        },
+        {
+            "title": "pipeline step",
+            "comment": "pipelineの部品",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/Common/Pipelines/002_step_factory.py",
+            "filename": "step_factory.py"
+        },
+        {
+            "title": "スクレイピング処理",
+            "comment": "自治体のホームページをスクレイピングする",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/Common/Components/DataFetchers/WebScraper/002_web_scraper_step.py",
+            "filename": "web_scraper_step.py"
+        },
+        {
+            "title": "カタログ作成処理",
+            "comment": "スクレイピングしたhtmlからhtagの階層構造を作成し、サービスカタログを生成する",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/LocalGovData/13214_city_kokubunji/ServiceCatalogCreator/pipeline/html2htaglayer_step.py",
+            "filename": "html2htaglayer_step.py"
+        },
+        {
+            "title": "llm prompt",
+            "comment": "llmのプロンプトテンプレート",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/LocalGovData/13214_city_kokubunji/ServiceCatalogCreator/pipeline/llm_service_json_prompt.txt",
+            "filename": "llm_service_json_prompt.txt"
+        },
+        {
+            "title": "embedding step",
+            "comment": "サービスカタログのベクトル化",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/Common/Components/001_bert_embedding_step.py",
+            "filename": "embedding_step.py"
+        },
+        {
+            "title": "pipeline定義ファイル",
+            "comment": "処理を定義する",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/LocalGovData/13214_city_kokubunji/ServiceCatalogCreator/pipeline/pipeline.yaml",
+            "filename": "pipeline.yaml"
+        },
+        {
+            "title": "requirement",
+            "comment": "使用するライブラリ",
+            "url": "https://raw.githubusercontent.com/dx-junkyard/OpenData-Bridge-pipeline/main/LocalGovData/13214_city_kokubunji/ServiceCatalogCreator/pipeline/requirements.txt",
+            "filename": "requirements.txt"
+        }
+    ]
+}
