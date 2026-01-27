@@ -11,3 +11,27 @@
 |瑞穂町|瑞穂町の行政サービスカタログ作成pipeline <br> |[pipelineの使い方](https://github.com/dx-junkyard/OpenData-Bridge-pipeline/tree/main/LocalGovData/133035_town_mizuho)|タグ解析によるHTML構造解析|
 |国分寺市|国分寺市の行政サービスカタログ作成pipeline <br> |[pipelineの使い方](https://github.com/dx-junkyard/OpenData-Bridge-pipeline/tree/main/LocalGovData/13214_city_kokubunji)|LLMによるHTML構造解析|
 
+## 3. Scrapy Project Structure (New Architecture)
+The project is being migrated to a standard Scrapy architecture under `opendata_bridge/`.
+
+```text
+opendata_bridge/
+├── scrapy.cfg
+└── src/
+    ├── items.py           # Output data definition (OpendataBridgeItem)
+    ├── middlewares.py
+    ├── pipelines.py       # Data persistence logic
+    ├── settings.py        # Scrapy settings
+    └── spiders/
+        ├── __init__.py
+        ├── base_spider.py # Common logic (BaseSpider)
+        ├── edogawa.py     # Edogawa City Spider (13123)
+        └── mizuho.py      # Mizuho Town Spider (133035 - Placeholder)
+```
+
+### Usage
+Run spiders from the `opendata_bridge` directory:
+```bash
+cd opendata_bridge
+scrapy crawl edogawa -O output.jsonl
+```
