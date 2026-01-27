@@ -16,3 +16,4 @@ class OpendataBridgeItem(scrapy.Item):
     url = scrapy.Field()
     municipality_code = scrapy.Field()
     crawled_at = scrapy.Field()
+    extended_attributes = scrapy.Field()  # Store structured data from LLM or other sources

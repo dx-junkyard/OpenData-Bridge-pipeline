@@ -26,3 +26,9 @@ ITEM_PIPELINES = {
 REQUEST_FINGERPRINTER_IMPLEMENTATION = '2.7'
 TWISTED_REACTOR = 'twisted.internet.asyncioreactor.AsyncioSelectorReactor'
 FEED_EXPORT_ENCODING = 'utf-8'
+
+# LLM Settings (read from environment variables)
+import os
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+OPENAI_BASE_URL = os.getenv('OPENAI_BASE_URL')
+LLM_MODEL = os.getenv('LLM_MODEL', 'gpt-4-turbo-preview')
