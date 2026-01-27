@@ -18,8 +18,11 @@ The project is being migrated to a standard Scrapy architecture under `opendata_
 
 ```text
 opendata_bridge/
+├── crawls/            # Job directories for resume (auto-generated)
+├── output/            # Scraped data (JSONL)
 ├── scrapy.cfg
 └── src/
+    ├── main.py            # CLI Entry point
     ├── items.py           # Output data definition (OpendataBridgeItem)
     ├── middlewares.py
     ├── pipelines.py       # Data persistence logic
@@ -44,32 +47,34 @@ pip install scrapy openai pandas
 
 ### スパイダーの実行 (Running Spiders)
 
-プロジェクトのルートディレクトリ (`opendata_bridge`) に移動してコマンドを実行します。
+プロジェクトのルートディレクトリで、`src/main.py` を使用して実行します。
+このスクリプトは、**中断・再開機能**と**ステップ実行制御**を提供します。
 
-#### 江戸川区 (Edogawa)
-基本的なクローリングを行います。
+#### 基本的な実行コマンド
 ```bash
-cd opendata_bridge
-scrapy crawl edogawa -O output_edogawa.jsonl
-```
+# プロジェクトルートに移動
+# PYTHONPATHを設定してモジュールを認識させる必要があります
+export PYTHONPATH=$PYTHONPATH:$(pwd)/opendata_bridge
+export SCRAPY_SETTINGS_MODULE=src.settings
 
-#### 国分寺市 (Kokubunji)
-LLMを使用してHTMLを解析するため、OpenAI互換のAPIキーが必要です。
-環境変数を設定してから実行してください。
+# 江戸川区のクローリング（中断しても再開可能）
+python3 opendata_bridge/src/main.py --target edogawa --step crawl
 
-```bash
-cd opendata_bridge
-
-# 環境変数の設定 (例)
+# 国分寺市のクローリング（LLM使用）
 export OPENAI_API_KEY="your-api-key"
-export OPENAI_BASE_URL="https://api.openai.com/v1" # 必要な場合
-export LLM_MODEL="gpt-4-turbo-preview"
-
-# スパイダーの実行
-scrapy crawl kokubunji -O output_kokubunji.jsonl
+python3 opendata_bridge/src/main.py --target kokubunji --step crawl
 ```
 
-**注意:** 国分寺市のスパイダーはLLM APIを呼び出すため、実行に時間がかかる場合があり、API利用料が発生する可能性があります。
+#### 引数の説明
+- `--target`: 対象の自治体識別子 (例: `edogawa`, `kokubunji`)
+- `--step`: 実行する工程
+  - `crawl`: スクレイピングを実行します。結果は `output/{target}.jsonl` に保存されます。
+  - `enrich`: データ加工のみを実行します（現在はプレースホルダー）。
+  - `all` (default): クロールと加工を順次実行します。
+
+### 中断・再開機能 (Resume Capability)
+`src/main.py` 経由で実行すると、自動的に `crawls/{target}` ディレクトリにクロール状態が保存されます。
+実行を `Ctrl+C` で停止しても、同じコマンドを再度実行すれば、**未取得のURLから自動的に再開**されます。
 
 ### 設定 (Configuration)
 `opendata_bridge/src/settings.py` で基本的な設定を変更できます。
